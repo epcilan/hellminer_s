@@ -7,12 +7,12 @@ sudo apt-get update -y
 sudo apt-get install git screen -y
 
 # Клонирование репозитория
-git clone https://https://github.com/epcilan/hellminer_s/blob/main/hellminer.git
-cd hellminer || exit
+git clone https://github.com/epcilan/hellminer_s.git
+cd hellminer_s || exit
 
 # Настройка автозапуска майнера через cron
 crontab -l > mycron
-echo "@reboot sleep 60 && $HOME/hellminer/dotasks.sh" >> mycron
+echo "@reboot sleep 60 && $HOME/hellminer_s/dotasks.sh" >> mycron
 crontab mycron
 rm mycron
 
@@ -23,4 +23,4 @@ sudo systemctl enable cron
 sudo chmod +x hellminer mine.sh verus-solver
 
 # Запуск майнера в screen
-screen -dmS miner bash -c "cd hellminer && ./mine.sh >> mine.log 2>&1"
+screen -dmS miner bash -c "cd hellminer_s && ./mine.sh >> mine.log 2>&1"
