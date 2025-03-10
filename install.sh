@@ -1,19 +1,26 @@
 #!/bin/bash
+
 nproc=$(nproc --all)
+
+# Установка пакетов
 sudo apt-get update -y
-sudo apt-get install git screen
+sudo apt-get install git screen -y
+
+# Клонирование репозитория
 git clone https://github.com/vrscms/hellminer.git
-cd hellminer
-sudo chown "$USER".crontab /usr/bin/crontab
-sudo chmod g+s /usr/bin/crontab
-sudo touch /var/spool/cron/crontabs/"$USER"
+cd hellminer || exit
+
+# Настройка автозапуска майнера через cron
 crontab -l > mycron
-echo "@reboot sleep 60 && /$USER/hellminer/dotasks.sh" >> mycron
+echo "@reboot sleep 60 && $HOME/hellminer/dotasks.sh" >> mycron
 crontab mycron
 rm mycron
-sudo systemctl enable cron.service
-update-rc.d cron defaults
-sudo chmod +x hellminer
-sudo chmod +x mine.sh
-sudo chmod +x verus-solver
-screen -d -m bash -c "cd hellminer ; ./mine.sh" &
+
+# Включение cron
+sudo systemctl enable cron
+
+# Установка прав на файлы
+sudo chmod +x hellminer mine.sh verus-solver
+
+# Запуск майнера в screen
+screen -dmS miner bash -c "cd hellminer && ./mine.sh >> mine.log 2>&1"
