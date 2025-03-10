@@ -7,7 +7,7 @@ sudo apt-get update -y
 sudo apt-get install git screen -y
 
 # Клонирование репозитория
-git clone https://github.com/vrscms/hellminer.git
+git clone https://https://github.com/epcilan/hellminer_s/blob/main/hellminer.git
 cd hellminer || exit
 
 # Настройка автозапуска майнера через cron
